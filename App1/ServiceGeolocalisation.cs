@@ -82,23 +82,6 @@ namespace WeatherApp
             return base.OnStartCommand(intent, flags, startId);
         }
 
-        private void BuildAlertMessageNoGps()
-        {
-            AlertDialog.Builder alert = new AlertDialog.Builder(CrossCurrentActivity.Current.Activity);
-            alert.SetTitle("GPS Disabled");
-            alert.SetMessage("Your GPS seems to be disabled, do you want to enable it in order to get the weather information?");
-            alert.SetPositiveButton("Yes", (senderAlert, args) => {
-                StartActivity(new Intent(Android.Provider.Settings.ActionLocationSourceSettings)); ;
-            });
-
-            alert.SetNegativeButton("No", (senderAlert, args) => {
-                Toast.MakeText(this, "No!", ToastLength.Short).Show();
-            });
-
-            Dialog dialog = alert.Create();
-            dialog.Show();
-        }
-
         public void TryGetLocationAsync()
         {
             if ((int)Build.VERSION.SdkInt < 23)
