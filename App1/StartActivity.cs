@@ -43,15 +43,24 @@ namespace WeatherApp
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-            ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
-            if (!prefs.GetBoolean("Install", false))
+            Android.Content.PM.Permission test = Android.Content.PM.Permission.Granted;
+            if (grantResults[0] == test && grantResults[0] == test)
             {
-                BDD.CreateBDD();
-            }
+                ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+                if (!prefs.GetBoolean("Install", false))
+                {
+                    BDD.CreateBDD();
+                }
 
-            Intent intent = new Intent(this, typeof(SynchroLogic));
-            StartActivity(intent);
+                Intent intent = new Intent(this, typeof(SynchroLogic));
+                StartActivity(intent);
+            }
+            else
+            {
+                Intent intent = new Intent(this, typeof(NoData));
+                Toast.MakeText(this, "Authorizations are necessary for the application.Please go to settings to enable it.", ToastLength.Long).Show();
+                StartActivity(intent);
+            }
         }        
     }
 
